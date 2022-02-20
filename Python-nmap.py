@@ -1,3 +1,4 @@
+
 import sys
 import nmap3
 import simplejson as json
@@ -24,84 +25,85 @@ response = input("""\nPlease enter the scan you want to run
                 4) ARP
                 5) ICMP
                 6) Subnet
+                7) Exit
                 Your pick: """)
 print('You have selected option: ', response)
 
+while response != '7':
 
-if response == '1' or 'OS':
+    if response == '1':
 
-    os_results = nmap.nmap_os_detection(ip_addr)
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.nmap_os_detection(ip_addr)
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
+        OS_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
 
-    file_path = pathlib.Path('home/master/OSscan.txt')
-    if file_path.exists():
-        with open("OSscan.txt", "w") as outfile:
-            outfile.writelines(file_json)
-    else:        
-        with open("OSscan.txt", "x") as outfile:
-            outfile.writelines(file_json)
+        with open("OSscan.txt", "a") as outfile:
+            outfile.writelines(OS_json)
 
 
 
-elif response == '2' or 'Stealth':
+    elif response == '2':
 
-    os_results = nmap.nmap_stealth_scan(ip_addr)
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.nmap_stealth_scan(ip_addr)
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
-          
-    file_path = pathlib.Path('home/master/Stealthscan.txt')
-    if file_path.exists():
-        with open("Stealthscan.txt", "w") as outfile:
-            outfile.writelines(file_json)
+        s_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+                
+        with open("Stealthscan.txt", "a") as outfile:
+            outfile.writelines(s_json)
         
-    else:        
-        with open("Stealthscan.txt", "x") as outfile:
-            outfile.writelines(file_json)
-        
-elif response == '3' or 'TCP':
+    elif response == '3':
 
-    os_results = nmap.scan_top_ports(ip_addr, args='-sS -Pn -sV -vv -T4 --reason')
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.scan_top_ports(ip_addr, args='-sS -Pn -sV -vv -T4 --reason')
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
-    with open("TCPscan.txt", "xaw") as outfile:
-        outfile.writelines(file_json)
+        tcp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("TCPscan.txt", "a") as outfile:
+            outfile.writelines(tcp_json)
 
-elif response == '4' or 'ARP':
+    elif response == '4':
 
-    os_results = nmap.scan_top_ports(ip_addr, args='-PR -vv -T4--reason')
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.scan_top_ports(ip_addr, args='-PR -vv -T4--reason')
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
-    with open("ARPscan.txt", "w") as outfile:
-        outfile.writelines(file_json)
+        arp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("ARPscan.txt", "a") as outfile:
+            outfile.writelines(arp_json)
             
 
-elif response == '5' or 'ICMP':
+    elif response == '5':
 
-    os_results = nmap.scan_top_ports(ip_addr, args='-PE -vv -T4 --reason')
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.scan_top_ports(ip_addr, args='-PE -vv -T4 --reason')
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
-    with open("ICMPscan.txt", "w") as outfile:
-        outfile.writelines(file_json)
+        icmp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("ICMPscan.txt", "a") as outfile:
+            outfile.writelines(icmp_json)
             
-elif response == '6' or 'Subnet':
+    elif response == '6':
 
-    os_results = nmap.nmap_subnet_scan(ip_addr)
-    colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+        os_results = nmap.nmap_subnet_scan(ip_addr)
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
                                      formatters.TerminalFormatter())
-    file_json = json.dumps(os_results, indent=4, sort_keys=True)
-    print("\n\n", colored_json)
-    with open("Subnetscan.txt", "w") as outfile:
-        outfile.writelines(file_json)  
+        sub_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("Subnetscan.txt", "a") as outfile:
+            outfile.writelines(sub_json)  
         
-  
+    response = input("""\nPlease enter the scan you want to run
+                1) OS Dection
+                2) Stealth
+                3) TCP Silent
+                4) ARP
+                5) ICMP
+                6) Subnet
+                7) Exit
+                Your pick: """)
+    print('You have selected option: ', response)
+    continue
