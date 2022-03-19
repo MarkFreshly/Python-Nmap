@@ -22,12 +22,16 @@ response = input("""\nPlease enter the scan you want to run
                 2) DNS enumeration
                 3) Syn/Sealth
                 4) All ports
+                5) Vulns
+                6) Discovery
+                7) Auth
+                8) Brute
             
-                7) Exit
+                9) Exit
                 Your pick: """)
 print('You have selected option: ', response)
 
-while response != '7':
+while response != '9':
 
     if response == '1':
 
@@ -71,16 +75,60 @@ while response != '7':
         print("\n\n", colored_json)
         with open("AllPortsscan.txt", "a") as outfile:
             outfile.writelines(arp_json)
-            
 
+
+    elif response == '5':
+
+        os_results = nmap.nmap_version_detection(ip_addr, args="-sC --script=vuln")
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+                                     formatters.TerminalFormatter())
+        arp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("VulnScan.txt", "a") as outfile:
+            outfile.writelines(arp_json)      
+
+    elif response == '6':
+
+        os_results = nmap.nmap_version_detection(ip_addr, args="-sC --script=discovery")
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+                                     formatters.TerminalFormatter())
+        arp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("Discovery.txt", "a") as outfile:
+            outfile.writelines(arp_json)               
+
+    elif response == '7':
+
+        os_results = nmap.nmap_version_detection(ip_addr, args="-sC --script=auth")
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+                                     formatters.TerminalFormatter())
+        arp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("Auth.txt", "a") as outfile:
+            outfile.writelines(arp_json)  
+
+    elif response == '8':
+
+        os_results = nmap.nmap_version_detection(ip_addr, args="-sC --script=brute")
+        colored_json = highlight(json.dumps(os_results, indent=4, sort_keys=True), lexers.JsonLexer(),
+                                     formatters.TerminalFormatter())
+        arp_json = json.dumps(os_results, indent=4, sort_keys=True)
+        print("\n\n", colored_json)
+        with open("Brute.txt", "a") as outfile:
+            outfile.writelines(arp_json)          
+            
         
     response = input("""\nPlease enter the scan you want to run
                 1) OS Dection
                 2) DNS enumeration
                 3) Syn/Sealth
                 4) All ports
+                5) Vulns
+                6) Discovery
+                7) Auth
+                8) Brute
             
-                7) Exit
+                9) Exit
                 Your pick: """)
     print('You have selected option: ', response)
     continue
